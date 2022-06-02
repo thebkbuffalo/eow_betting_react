@@ -36,3 +36,5 @@
     transform: rotate(360deg);
   }
 }
+
+.signUpForm {display: inline-grid;}
