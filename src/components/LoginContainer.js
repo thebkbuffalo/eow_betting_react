@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-const API_URL = "http://localhost:3000"
+import AuthServices from "../services/auth-service";
 
 const Login = () => {
-
   const [user, setUser] = useState({email: '', password: ''})
-
   const handleInputChange = (event) => {
     const {name, value} = event.target
     setUser({...user, [name]: value})
   }
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    axios.post(API_URL+'/auth/login', {email: user.email, password: user.password}).then(resp=>{
-      if(resp.data.token){
-        localStorage.setItem('token', resp.data.token);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    AuthServices.login(user).then(resp => {
+      if(resp.statusText === "OK"){
+        window.location = '/dashboard';
+      }else{
+        console.log(resp);
       }
     });
   }

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-const API_URL = "http://localhost:3000"
+import AuthServices from "../services/auth-service";
 
 const Signup = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
   
   const initialFormState = {
     first_name: '',
@@ -22,11 +20,13 @@ const Signup = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    axios.post(API_URL+'/users', {user}).then(resp=>{
-      if(resp.data.id && resp.data.email === user.email){
-        window.location('/login');
+    AuthServices.register(user).then(resp => {
+      if(resp.statusText === 'Created'){
+        window.location = "/login";
+      }else{
+        console.log(resp);
       }
-    }).catch((error)=>(console.log(error)));
+    });
   }
 
   return(
