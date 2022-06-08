@@ -39,10 +39,11 @@ function PrivateRoute({children}){
 }
 
 function ProtectedRoute({children}){
+  var token = localStorage.getItem('token');
   var user = JSON.parse(localStorage.getItem('user'));
   var params = useParams();
   var userId = params['id']
-  if(userId === user.id.toString()){
+  if(token && userId === user.id.toString()){
     var correctId = true;
   }else{
     var correctId = false;
