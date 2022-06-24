@@ -6,7 +6,7 @@ class AuthService {
     return axios.post(API_URL+'auth/login', {email: userData.email, password: userData.password}).then(resp=>{
       if(resp.statusText === 'OK' && resp.data.token){
         localStorage.setItem('token', resp.data.token);
-        localStorage.setItem('user', JSON.stringify(resp.data.user))
+        localStorage.setItem('user', JSON.stringify(resp.data.user));
       }
       return resp
     }).catch((error)=>console.log(error));
