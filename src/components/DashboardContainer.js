@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL+"/users", {withCredentials: true}).then(resp => {
+    axios.get(API_URL+"users", {withCredentials: true}).then(resp => {
       setUsersList(resp.data);
     });
   }, []);
