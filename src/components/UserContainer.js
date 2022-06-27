@@ -12,7 +12,7 @@ const User = () => {
   useEffect(() => {
     if(currentUser){
       var id = currentUser.id;
-      axios.get(API_URL+'/users/'+id, {headers: authHeader()}).then(resp=>{
+      axios.get(API_URL+'users/'+id, {headers: authHeader()}).then(resp=>{
         setUser(resp.data);
       });
     }
