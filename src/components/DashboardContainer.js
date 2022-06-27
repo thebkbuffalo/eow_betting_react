@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthServices from "../services/auth-service";
 import authHeader from "../services/auth-header";
-const API_URL = "http://127.0.0.1:3000"
+// const API_URL = "http://127.0.0.1:3000"
+const API_URL = "https://damp-caverns-74991.herokuapp.com/"
 
 const Dashboard = () => {
   const user = AuthServices.getCurrentUser();

@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/"
+// const API_URL = "http://localhost:3000/"
+const API_URL = "https://damp-caverns-74991.herokuapp.com/"
 
 class AuthService {
   login(userData){
     return axios.post(API_URL+'auth/login', {email: userData.email, password: userData.password}).then(resp=>{
-      debugger
       if(resp.data.loggedIn){
         localStorage.setItem('user', JSON.stringify(resp.data.user));
       }

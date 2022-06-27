@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import authHeader from '../services/auth-header';
 import AuthService from "../services/auth-service";
-const API_URL = 'http://localhost:3000'
+// const API_URL = 'http://localhost:3000'
+const API_URL = "https://damp-caverns-74991.herokuapp.com/"
 
 const User = () => {
   const [user, setUser] = useState({});
