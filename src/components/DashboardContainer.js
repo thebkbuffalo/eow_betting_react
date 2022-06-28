@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL+"users", {withCredentials: true, headers: {'Content-Type': 'application/json', "Accept": "application/json"}}).then(resp => {
+    axios.get(API_URL+"users", {withCredentials: true, headers: {crossDomain: true, 'Content-Type': 'application/json'}}).then(resp => {
       setUsersList(resp.data);
     });
   }, []);
