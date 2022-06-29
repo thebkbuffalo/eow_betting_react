@@ -11,7 +11,6 @@ const Dashboard = () => {
   const [betsList, setBetsList] = useState([]);
 
   useEffect(() => {
-    console.log(user.id);
     var userId = user.id;
     axios.get(API_URL+"dashboard?user_id="+userId).then(resp => {
       setBetsList(resp.data.bets);
@@ -25,8 +24,15 @@ const Dashboard = () => {
     </ul>
   );
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    AuthServices.logout();
+    window.location = '/login'
+  }
+
   return(
     <div>
+      <button id='logout' onClick={handleLogout}>Log Out</button>
       <h1>Possibly Protected Dashboard</h1>
       {displayBetsList}
     </div>

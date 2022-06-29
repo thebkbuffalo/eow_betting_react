@@ -34,8 +34,13 @@ const App = () => {
 }
 
 function PrivateRoute({children}){
-  var token = true //localStorage.getItem('token');
-  return token ? children : <Navigate to="/login"/>
+  var user = localStorage.getItem('user');
+  var isLoggedIn = localStorage.getItem('isLoggedIn');
+  if(user && isLoggedIn){
+    return children
+  }else{
+    return <Navigate to="/login/"/>
+  }
 }
 
 function ProtectedRoute({children}){

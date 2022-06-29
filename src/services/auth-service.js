@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 axios.defaults.withCredentials = true;
 
 class AuthService {
@@ -15,6 +16,7 @@ class AuthService {
     return axios.post(url+'auth/login', {email: userData.email, password: userData.password}).then(resp=>{
       if(resp.data.loggedIn){
         localStorage.setItem('user', JSON.stringify(resp.data.user));
+        localStorage.setItem('isLoggedIn', true);
       }
       return resp
     }).catch((error)=>console.log(error));
@@ -27,8 +29,8 @@ class AuthService {
     }).catch((error)=>console.log(error));
   }
   logout(){
-    localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('isLoggedIn');
   }
   getCurrentUser(){
     var user = localStorage.getItem('user');
