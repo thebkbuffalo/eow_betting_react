@@ -1,10 +1,17 @@
 import axios from "axios";
-// const API_URL = "http://localhost:3000/"
-const API_URL = "https://damp-caverns-74991.herokuapp.com/"
 
 class AuthService {
+  getBaseUrl(){
+    var url = window.location.href;
+    if(url.includes('127.0.0.1') || url.includes('localhost')){
+      return "http://127.0.0.1:3000/"
+    }else{
+      return "https://damp-caverns-74991.herokuapp.com/"
+    }
+  }
   login(userData){
-    return axios.post(API_URL+'auth/login', {email: userData.email, password: userData.password}).then(resp=>{
+    var url = this.getBaseUrl();
+    return axios.post(url+'auth/login', {email: userData.email, password: userData.password}).then(resp=>{
       if(resp.data.loggedIn){
         localStorage.setItem('user', JSON.stringify(resp.data.user));
       }
@@ -12,8 +19,9 @@ class AuthService {
     }).catch((error)=>console.log(error));
   }
   register(userData){
+    var url = this.getBaseUrl();
     var user = userData;
-    return axios.post(API_URL+'users', {user}).then(resp=>{
+    return axios.post(url+'users', {user}).then(resp=>{
       return resp;
     }).catch((error)=>console.log(error));
   }

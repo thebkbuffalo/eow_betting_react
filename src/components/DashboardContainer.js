@@ -4,8 +4,7 @@ import AuthServices from "../services/auth-service";
 // import authHeader from "../services/auth-header";
 axios.defaults.withCredentials = true;
 
-// const API_URL = "http://localhost:3000/"
-const API_URL = "https://damp-caverns-74991.herokuapp.com/"
+const API_URL = AuthServices.getBaseUrl();
 
 const Dashboard = () => {
   const user = AuthServices.getCurrentUser();
