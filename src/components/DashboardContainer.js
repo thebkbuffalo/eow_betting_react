@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthServices from "../services/auth-service";
-import authHeader from "../services/auth-header";
+// import authHeader from "../services/auth-header";
+axios.defaults.withCredentials = true;
 
 // const API_URL = "http://localhost:3000/"
 const API_URL = "https://damp-caverns-74991.herokuapp.com/"
@@ -11,7 +12,7 @@ const Dashboard = () => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL+"users", {withCredentials: true, headers: {crossDomain: true, 'Content-Type': 'application/json'}}).then(resp => {
+    axios.get(API_URL+"users").then(resp => {
       setUsersList(resp.data);
     });
   }, []);
