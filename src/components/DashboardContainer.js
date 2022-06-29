@@ -8,26 +8,27 @@ const API_URL = AuthServices.getBaseUrl();
 
 const Dashboard = () => {
   const user = AuthServices.getCurrentUser();
-  const [usersList, setUsersList] = useState([]);
+  const [betsList, setBetsList] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL+"users").then(resp => {
-      setUsersList(resp.data);
+    console.log(user.id);
+    var userId = user.id;
+    axios.get(API_URL+"dashboard?user_id="+userId).then(resp => {
+      setBetsList(resp.data.bets);
     });
   }, []);
 
-  const displayUsersList = usersList.map((user) => 
-    <ul key={user.id}>
-      <li key={user.last_name}>{user.first_name} {user.last_name}</li>
-      <li key={user.username}>{user.username}</li>
-      <li key={user.email}>{user.email}</li>
+  const displayBetsList = betsList.map((bet) => 
+    <ul key={bet.id}>
+      <li>{bet.main_cause_id}</li>
+      <li>{bet.timeframe}</li>
     </ul>
   );
 
   return(
     <div>
       <h1>Possibly Protected Dashboard</h1>
-      {displayUsersList}
+      {displayBetsList}
     </div>
 
   )
