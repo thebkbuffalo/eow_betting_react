@@ -32,8 +32,6 @@ const Dashboard = () => {
     }
   }
 
-
-
   return(
     <div>
       <button id='logout' onClick={handleLogout}>Log Out</button>

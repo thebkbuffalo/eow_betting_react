@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {BrowserRouter, Route, Routes, Navigate, useParams} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate, useParams, NavLink} from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import { Component, useState, useEffect } from 'react';
@@ -8,10 +8,20 @@ import Signup from "./components/SignupContainer"
 import Login from "./components/LoginContainer"
 import Dashboard from "./components/DashboardContainer"
 import User from "./components/UserContainer"
+import { render } from '@testing-library/react';
+import AuthServices from "./services/auth-service";
 
 const App = () => {
+  // const [loggedIn, setLoggedIn] = useState('');
+  // useEffect(() => {
+  //   loggedIn = localStorage.getItem('isLoggedIn');
+  // }, [])
   return(
     <BrowserRouter>
+
+        <NavBar></NavBar>
+        {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> : <NavLink to="/login">Login</NavLink>} */}
+
       <Fragment>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
@@ -31,6 +41,33 @@ const App = () => {
       </Fragment>
     </BrowserRouter>
   )
+}
+
+function NavBar(){
+  var loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
+  var url = window.location.href;
+  var onLoginPage = url.includes('login');
+  if(!loggedIn && !onLoginPage){
+    return(
+      <h5>
+        <NavLink to='/login'>Login</NavLink>
+      </h5>
+    )
+  }else{
+    return(
+      <h5>
+        <span onClick={handleLogout}>Logout</span> | 
+        <NavLink to='/dashboard'>Dashboard</NavLink> | 
+        <NavLink to='/'>Home</NavLink>
+      </h5>
+    )
+  }
+}
+
+const handleLogout = (e) => {
+  e.preventDefault();
+  AuthServices.logout();
+  window.location = "/"
 }
 
 function PrivateRoute({children}){
