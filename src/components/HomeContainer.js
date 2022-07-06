@@ -19,6 +19,7 @@ const Home = () => {
       <li>Bet made by {bet.user_name}</li>
       <li>{bet.main_cause}</li>
       <li>{bet.sub_cause}</li>
+      <li>${bet.amount}</li>
       <li>{bet.timeframe}</li>
     </ul>
   );

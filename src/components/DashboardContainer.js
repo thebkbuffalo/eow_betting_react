@@ -37,6 +37,7 @@ const Dashboard = () => {
             <ul key={index}>
               <li>{bet.main_cause}</li>
               <li>{bet.sub_cause}</li>
+              <li>${bet.amount}</li>
             </ul>
           )}
         </span>
