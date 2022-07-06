@@ -18,12 +18,6 @@ const Dashboard = () => {
     });
   }, []);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    AuthServices.logout();
-    window.location = '/login'
-  }
-
   const isDataEmpty = () => {
     if(typeof(betsList) === 'string'){
       return true;
@@ -34,7 +28,6 @@ const Dashboard = () => {
 
   return(
     <div>
-      <button id='logout' onClick={handleLogout}>Log Out</button>
       <h1>Possibly Protected Dashboard</h1>
       {isDataEmpty() ? (
         <p>{betsList}</p>

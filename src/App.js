@@ -12,10 +12,6 @@ import { render } from '@testing-library/react';
 import AuthServices from "./services/auth-service";
 
 const App = () => {
-  // const [loggedIn, setLoggedIn] = useState('');
-  // useEffect(() => {
-  //   loggedIn = localStorage.getItem('isLoggedIn');
-  // }, [])
   return(
     <BrowserRouter>
 
@@ -44,21 +40,26 @@ const App = () => {
 }
 
 function NavBar(){
-  var loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
-  var url = window.location.href;
-  var onLoginPage = url.includes('login');
-  if(!loggedIn && !onLoginPage){
-    return(
-      <h5>
-        <NavLink to='/login'>Login</NavLink>
-      </h5>
-    )
+  const loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
+  const url = window.location.href;
+  const onLoginPage = url.includes('login');
+
+  if(!loggedIn){
+    if(!onLoginPage){
+      return(
+        <h5><a href='/login'>Login</a></h5>
+      )
+    }else{
+      return(
+        <h5><a href='/'>Home</a></h5>
+      )
+    }
   }else{
     return(
       <h5>
         <span onClick={handleLogout}>Logout</span> | 
-        <NavLink to='/dashboard'>Dashboard</NavLink> | 
-        <NavLink to='/'>Home</NavLink>
+        <a href='/dashboard'>Dashboard</a> | 
+        <a href='/'>Home</a>
       </h5>
     )
   }
