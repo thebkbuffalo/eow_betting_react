@@ -12,7 +12,6 @@ import User from "./components/UserContainer"
 import AuthServices from "./services/auth-service";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import theme from './theme'
 
@@ -53,7 +52,7 @@ function NavBar(){
   if(!loggedIn){
     if(!onLoginPage){
       return(
-        <Button variant='contained' href='/login' color='primary' startIcon={<AccessAlarmIcon/>}>Login</Button>
+        <Button variant='contained' href='/login' color='primary'>Login</Button>
       )
     }else{
       return(
