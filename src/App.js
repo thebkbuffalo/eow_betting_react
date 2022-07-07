@@ -1,41 +1,47 @@
 import React, {Fragment} from 'react';
 import {BrowserRouter, Route, Routes, Navigate, useParams} from 'react-router-dom';
-import axios from 'axios';
-import './App.css';
-import { Component, useState, useEffect } from 'react';
+// import axios from 'axios';
+// import './App.css';
+// import { Component, useState, useEffect } from 'react';
 import Home from "./components/HomeContainer"
 import Signup from "./components/SignupContainer"
 import Login from "./components/LoginContainer"
 import Dashboard from "./components/DashboardContainer"
 import User from "./components/UserContainer"
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import AuthServices from "./services/auth-service";
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+
+
+
 
 const App = () => {
 
-  return(
-    <BrowserRouter>
+    return(
+      <BrowserRouter>
+        <NavBar></NavBar>
+        <Fragment>
+          <Routes>
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/signup" element={<Signup/>}/>
+            <Route exact path="/login" element={<Login/>}/>
+            <Route exact path="/dashboard" element={
+              <PrivateRoute>
+                <Dashboard/>
+              </PrivateRoute>
+            }/>
+            <Route exact path="/user/:id" element={
+              <ProtectedRoute>
+                <User/>
+              </ProtectedRoute>
+            }/>
+          </Routes>
+        </Fragment>
+      </BrowserRouter>
+    )
 
-      <NavBar></NavBar>
-      <Fragment>
-        <Routes>
-          <Route exact path="/" element={<Home/>}/>
-          <Route exact path="/signup" element={<Signup/>}/>
-          <Route exact path="/login" element={<Login/>}/>
-          <Route exact path="/dashboard" element={
-            <PrivateRoute>
-              <Dashboard/>
-            </PrivateRoute>
-          }/>
-          <Route exact path="/user/:id" element={
-            <ProtectedRoute>
-              <User/>
-            </ProtectedRoute>
-          }/>
-        </Routes>
-      </Fragment>
-    </BrowserRouter>
-  )
 }
 
 function NavBar(){
@@ -46,7 +52,7 @@ function NavBar(){
   if(!loggedIn){
     if(!onLoginPage){
       return(
-        <h5><a href='/login'>Login</a></h5>
+        <Button variant='contained' href='/login' color='success' startIcon={<AccessAlarmIcon/>}>Login</Button>
       )
     }else{
       return(
@@ -56,7 +62,7 @@ function NavBar(){
   }else{
     return(
       <h5>
-        <span onClick={handleLogout}>Logout</span> | 
+        <Button variant='contained' onClick={handleLogout}>Logout</Button> | 
         <a href='/dashboard'>Dashboard</a> | 
         <a href='/'>Home</a>
       </h5>
