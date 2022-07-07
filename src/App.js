@@ -13,32 +13,33 @@ import AuthServices from "./services/auth-service";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-
-
-
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import theme from './theme'
 
 const App = () => {
 
     return(
       <BrowserRouter>
-        <NavBar></NavBar>
-        <Fragment>
-          <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/signup" element={<Signup/>}/>
-            <Route exact path="/login" element={<Login/>}/>
-            <Route exact path="/dashboard" element={
-              <PrivateRoute>
-                <Dashboard/>
-              </PrivateRoute>
-            }/>
-            <Route exact path="/user/:id" element={
-              <ProtectedRoute>
-                <User/>
-              </ProtectedRoute>
-            }/>
-          </Routes>
-        </Fragment>
+        <ThemeProvider theme={theme}>
+          <NavBar></NavBar>
+          <Fragment>
+            <Routes>
+              <Route exact path="/" element={<Home/>}/>
+              <Route exact path="/signup" element={<Signup/>}/>
+              <Route exact path="/login" element={<Login/>}/>
+              <Route exact path="/dashboard" element={
+                <PrivateRoute>
+                  <Dashboard/>
+                </PrivateRoute>
+              }/>
+              <Route exact path="/user/:id" element={
+                <ProtectedRoute>
+                  <User/>
+                </ProtectedRoute>
+              }/>
+            </Routes>
+          </Fragment>
+        </ThemeProvider>
       </BrowserRouter>
     )
 
@@ -52,7 +53,7 @@ function NavBar(){
   if(!loggedIn){
     if(!onLoginPage){
       return(
-        <Button variant='contained' href='/login' color='success' startIcon={<AccessAlarmIcon/>}>Login</Button>
+        <Button variant='contained' href='/login' color='primary' startIcon={<AccessAlarmIcon/>}>Login</Button>
       )
     }else{
       return(
