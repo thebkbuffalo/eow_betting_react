@@ -12,12 +12,11 @@ import { render } from '@testing-library/react';
 import AuthServices from "./services/auth-service";
 
 const App = () => {
+
   return(
     <BrowserRouter>
 
-        <NavBar></NavBar>
-        {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> : <NavLink to="/login">Login</NavLink>} */}
-
+      <NavBar></NavBar>
       <Fragment>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
