@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthServices from "../services/auth-service";
-// import authHeader from "../services/auth-header";
 axios.defaults.withCredentials = true;
 
 const API_URL = AuthServices.getBaseUrl();
@@ -28,7 +27,7 @@ const Dashboard = () => {
 
   return(
     <div>
-      <h1>Possibly Protected Dashboard</h1>
+      <h1>Hello {user.first_name}</h1>
       {isDataEmpty() ? (
         <p>{betsList}</p>
       ) : (

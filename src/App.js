@@ -8,6 +8,7 @@ import Signup from "./components/SignupContainer"
 import Login from "./components/LoginContainer"
 import Dashboard from "./components/DashboardContainer"
 import User from "./components/UserContainer"
+import NewBet from "./components/NewBetContainer"
 // import { render } from '@testing-library/react';
 import AuthServices from "./services/auth-service";
 import Button from '@mui/material/Button';
@@ -31,6 +32,11 @@ const App = () => {
                   <Dashboard/>
                 </PrivateRoute>
               }/>
+              <Route exact path="/newbet/:id" element={
+                <PrivateRoute>
+                  <NewBet/>
+                </PrivateRoute>
+              }/>
               <Route exact path="/user/:id" element={
                 <ProtectedRoute>
                   <User/>
@@ -48,6 +54,7 @@ function NavBar(){
   const loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
   const url = window.location.href;
   const onLoginPage = url.includes('login');
+  const user = AuthServices.getCurrentUser();
 
   if(!loggedIn){
     if(!onLoginPage){
@@ -64,6 +71,7 @@ function NavBar(){
       <h5>
         <Button variant='contained' onClick={handleLogout}>Logout</Button> | 
         <a href='/dashboard'>Dashboard</a> | 
+        <a href={`/newbet/`+user.id}>New Bet</a> |
         <a href='/'>Home</a>
       </h5>
     )
