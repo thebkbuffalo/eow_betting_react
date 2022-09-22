@@ -26,7 +26,7 @@ const Home = () => {
   }, []);
 
   const displayBets = bets.map((bet) =>
-    <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined'>
+    <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
       <List>
         <ListItem>Bet made by {bet.user_name}</ListItem>
         <ListItem>{bet.main_cause}</ListItem>
@@ -39,19 +39,17 @@ const Home = () => {
 
   return(
     <Box sx={{width: '100%', bgcolor: 'background.paper'}}>
-      <Typography>
-        <div id='home-container'>
-          <div className='heading'>
-            <Typography variant='h2'>Welcome to the End of the World!!!</Typography>
-            <Typography variant='h5'>(Or atleast the fake betting for it)</Typography>
-          </div>
-          <div id='recent-bets'>
-            <Grid container direction='row' justifyContent='center' alignItems='center'>
-              {displayBets}
-            </Grid>
-          </div>
+      <div id='home-container'>
+        <div className='heading'>
+          <Typography variant='h2'>Welcome to the End of the World!!!</Typography>
+          <Typography variant='h5'>(Or atleast the fake betting for it)</Typography>
         </div>
-      </Typography>
+        <div id='recent-bets'>
+          <Grid container direction='row'>
+            {displayBets}
+          </Grid>
+        </div>
+      </div>
     </Box>
   )
 }

@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {BrowserRouter, Route, Routes, Navigate, useParams} from 'react-router-dom';
-// import axios from 'axios';
-// import './App.css';
+
+import './customStyle.css';
 // import { Component, useState, useEffect } from 'react';
 import Home from "./components/HomeContainer"
 import Signup from "./components/SignupContainer"
@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import theme from './theme'
+
 
 const App = () => {
 
