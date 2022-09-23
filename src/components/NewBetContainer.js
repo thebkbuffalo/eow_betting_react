@@ -36,6 +36,16 @@ const NewBet = () => {
     setNewBet({...newBet, [name]: value});
   }
 
+  const checkMainCauseForSubCause = () => {
+    if(newBet.main_cause_id != null){
+      return true;
+      console.log(true);
+    }else{
+      return false;
+      console.log(false);
+    }
+  }
+
   return(
     <div>
       <Typography variant='h4'>Make a New Bet!</Typography>
@@ -50,10 +60,10 @@ const NewBet = () => {
             <MenuItem value={cause.id} key={cause.id}>{cause.title}</MenuItem>
           )}
         </Select>
-        <InputLabel>Sub Cause</InputLabel>
-        <Select label='subCause'>
-            
-        </Select>
+        {newBet.main_cause_id != null && 
+          <InputLabel>Sub Cause</InputLabel>
+          <Select label='subCause'></Select>
+        }
       </div>
     </div>
   )
