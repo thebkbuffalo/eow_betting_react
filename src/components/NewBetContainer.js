@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthServices from "../services/auth-service";
-import { TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 axios.defaults.withCredentials = true;
 const API_URL = AuthServices.getBaseUrl();
 
@@ -23,7 +26,7 @@ const NewBet = () => {
 
   return(
     <div>
-      <h1>Make a New Bet {user.first_name} {user.last_name}!</h1>
+      <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
 
       </div>

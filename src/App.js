@@ -78,6 +78,7 @@ function NavBar(){
           <a href='/'>Home</a> <span> | </span>
           <a href='/dashboard'>Dashboard</a> <span> | </span>
           <a href={'/newbet'}>New Bet</a>
+          <span className='navUserWelcome'>Hello {user.first_name}</span>
         </Typography>
       </AppBar>
     )
