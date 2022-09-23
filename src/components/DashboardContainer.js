@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthServices from "../services/auth-service";
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 axios.defaults.withCredentials = true;
 
 const API_URL = AuthServices.getBaseUrl();
@@ -25,21 +31,29 @@ const Dashboard = () => {
     }
   }
 
+  const displayBets = betsList.map((bet) =>
+  <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
+    <List>
+      <ListItem>Bet made by {bet.user_name}</ListItem>
+      <ListItem>{bet.main_cause}</ListItem>
+      <ListItem>{bet.sub_cause}</ListItem>
+      <ListItem>${bet.amount}</ListItem>
+      <ListItem>{bet.timeframe}</ListItem>
+    </List>
+  </Card>
+);
+
   return(
     <div>
-      <h1>Hello {user.first_name}</h1>
+      <Typography variant='h3'>Hello {user.first_name}</Typography>
       {isDataEmpty() ? (
-        <p>{betsList}</p>
+        <Typography variant='p'>You haven't made any bets! <a href='/newbet'></a></Typography>
       ) : (
-        <span>
-          {betsList.map((bet, index) =>
-            <ul key={index}>
-              <li>{bet.main_cause}</li>
-              <li>{bet.sub_cause}</li>
-              <li>${bet.amount}</li>
-            </ul>
-          )}
-        </span>
+      <div id='recent-bets'>
+        <Grid container direction='row'>
+          {displayBets}
+        </Grid>
+      </div>
       )}
     </div>
 

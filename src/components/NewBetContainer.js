@@ -8,6 +8,7 @@ const API_URL = AuthServices.getBaseUrl();
 const NewBet = () => {
   const user = AuthServices.getCurrentUser();
   const [mainCauses, setMainCauses] = useState([]);
+  const [subCauses, setSubCauses] = useState([]);
   const [newBet, setNewBet] = useState([]);
 
   useEffect(() => {
@@ -15,13 +16,14 @@ const NewBet = () => {
       console.log(resp);
       let main_causes = resp.data.main_causes;
       let sub_causes = resp.data.sub_causes;
-      
+      setMainCauses(main_causes);
+      setSubCauses(sub_causes);
     });
   }, []);
 
   return(
     <div>
-      <h1>Make a New Bet!</h1>
+      <h1>Make a New Bet {user.first_name} {user.last_name}!</h1>
       <div className='newBet'>
 
       </div>

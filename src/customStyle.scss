@@ -1,0 +1,28 @@
+#root {margin: 60px 10px 0 10px;}
+
+nav {
+  padding: 10px 0 10px 1%;
+  .logoutLink {cursor: pointer}
+  a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  span {
+    font-size: 20px;
+    margin: 0 5px;
+  }
+}
+
+
+// home page
+.betCard {margin: 10px;}
+
+// login page
+.loginBoxInner {margin: 10px 0 15px 20px;}
+.loginBtn {margin-top: 5px!important;}
+.loginInput {margin-top: 5px;}
+.showPWIcon {
+  margin: 3px 0 0 5px;
+  cursor: pointer;
+}

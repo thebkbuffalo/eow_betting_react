@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {BrowserRouter, Route, Routes, Navigate, useParams} from 'react-router-dom';
 
-import './customStyle.css';
+import './customStyle.scss';
 // import { Component, useState, useEffect } from 'react';
 import Home from "./components/HomeContainer"
 import Signup from "./components/SignupContainer"
@@ -13,8 +13,11 @@ import NewBet from "./components/NewBetContainer"
 import AuthServices from "./services/auth-service";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import theme from './theme'
+import { Typography } from '@mui/material';
 
 
 const App = () => {
@@ -33,7 +36,7 @@ const App = () => {
                   <Dashboard/>
                 </PrivateRoute>
               }/>
-              <Route exact path="/newbet/:id" element={
+              <Route exact path="/newbet" element={
                 <PrivateRoute>
                   <NewBet/>
                 </PrivateRoute>
@@ -60,21 +63,23 @@ function NavBar(){
   if(!loggedIn){
     if(!onLoginPage){
       return(
-        <Button variant='contained' href='/login' color='primary'>Login</Button>
+        <AppBar component='nav' sx={{display: 'inline-block'}}><a href='/login'>Login</a></AppBar>
       )
     }else{
       return(
-        <h5><a href='/'>Home</a></h5>
+        <AppBar component='nav' sx={{display: 'inline-block'}}><a href='/'>Home</a></AppBar>
       )
     }
   }else{
     return(
-      <h5>
-        <Button variant='contained' onClick={handleLogout}>Logout</Button> | 
-        <a href='/dashboard'>Dashboard</a> | 
-        <a href={`/newbet/`+user.id}>New Bet</a> |
-        <a href='/'>Home</a>
-      </h5>
+      <AppBar component='nav' sx={{display: 'inline-block'}}>
+        <Typography variant='h5'>
+          <a className='logoutLink' onClick={handleLogout}>Logout</a> <span> | </span>
+          <a href='/'>Home</a> <span> | </span>
+          <a href='/dashboard'>Dashboard</a> <span> | </span>
+          <a href={'/newbet'}>New Bet</a>
+        </Typography>
+      </AppBar>
     )
   }
 }
