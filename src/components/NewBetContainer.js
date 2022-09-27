@@ -36,33 +36,30 @@ const NewBet = () => {
     setNewBet({...newBet, [name]: value});
   }
 
-  const checkMainCauseForSubCause = () => {
-    if(newBet.main_cause_id != null){
-      return true;
-      console.log(true);
-    }else{
-      return false;
-      console.log(false);
-    }
-  }
+  // const getSubCauses = () => {
+  //   let causeId = newBet.main_cause_id;
+  //   let mainCause = currentCauses.find(cause => cause.id === causeId);
+  //   debugger
+  //   console.log(mainCause)
+  // }
 
   return(
     <div>
       <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
         <InputLabel>Main Cause</InputLabel>
-        <Select 
-          label='mainCause'
-          name='main_cause_id'
-          onChange={handleInputChange}
-        >
-          {currentCauses.map((cause, index) => 
+        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} defaultValue="">
+          {currentCauses.map((cause) => 
             <MenuItem value={cause.id} key={cause.id}>{cause.title}</MenuItem>
           )}
         </Select>
         {newBet.main_cause_id != null && 
-          <InputLabel>Sub Cause</InputLabel>
-          <Select label='subCause'></Select>
+          <>
+            <InputLabel>Sub Cause</InputLabel>
+            <Select label='subCause' name='sub_cause_id' defaultValue="">
+            
+            </Select>
+          </>
         }
       </div>
     </div>
