@@ -21,6 +21,7 @@ const NewBet = () => {
   }
   const user = AuthServices.getCurrentUser();
   const [currentCauses, setCurrentCauses] = useState([]);
+  const [subCauses, setSubCauses] = useState([]);
   const [newBet, setNewBet] = useState(initialFormState);
 
   useEffect(() => {
@@ -33,7 +34,8 @@ const NewBet = () => {
 
   const handleInputChange = (event) => {
     const {name, value} = event.target;
-    setNewBet({...newBet, [name]: value});
+    setNewBet({...newBet, [name]: value.id});
+    setSubCauses(value.subs);
   }
 
   // const getSubCauses = () => {
@@ -50,14 +52,16 @@ const NewBet = () => {
         <InputLabel>Main Cause</InputLabel>
         <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} defaultValue="">
           {currentCauses.map((cause) => 
-            <MenuItem value={cause.id} key={cause.id}>{cause.title}</MenuItem>
+            <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
         </Select>
         {newBet.main_cause_id != null && 
           <>
             <InputLabel>Sub Cause</InputLabel>
             <Select label='subCause' name='sub_cause_id' defaultValue="">
-            
+              {subCauses.map((sub) =>
+                <MenuItem value={sub} key={sub.id}>{sub.title}</MenuItem>
+              )}
             </Select>
           </>
         }
