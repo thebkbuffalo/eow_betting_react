@@ -11,8 +11,8 @@ import Select from '@mui/material/Select';
 import { Input, Menu } from '@mui/material';
 axios.defaults.withCredentials = true;
 const API_URL = AuthServices.getBaseUrl();
-const numbersArray = Array.from(Array(100).keys());
-const dayMonthYear = ['Days', 'Months', 'Years']
+// const numbersArray = Array.from(Array(100).keys());
+// const dayMonthYear = ['Days', 'Months', 'Years']
 
 const NewBet = () => {
   const initialFormState = {
@@ -35,15 +35,21 @@ const NewBet = () => {
     });
   }, []);
 
-  const handleMainCauseChange = (event) => {
+  const handleInputChange = (event) => {
     const {name, value} = event.target;
-    setNewBet({...newBet, [name]: value.id});
-    setSubCauses(value.subs);
+    setNewBet({...newBet, [name]: value})
+    if(name === 'main_cause_id' || name === 'sub_cause_id'){
+      setNewBet({...newBet, [name]: value.id});
+      if(name === 'main_cause_id'){
+        setSubCauses(value.subs);
+      }
+    }
   }
 
-  const handleSubCauseChange = (event) => {
-    const {name, value} = event.target;
-    setNewBet({...newBet, [name]: value.id})
+  const createNewBet = () => {
+    axios.post(API_URL+'bets', newBet).then(resp=>{
+      console.log(resp);
+    });
   }
 
   return(
@@ -51,7 +57,7 @@ const NewBet = () => {
       <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
         <InputLabel>Main Cause</InputLabel>
-        <Select label='mainCause' name='main_cause_id' onChange={handleMainCauseChange} defaultValue="">
+        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} defaultValue="">
           {currentCauses.map((cause) => 
             <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
@@ -59,14 +65,36 @@ const NewBet = () => {
         {newBet.main_cause_id != null && 
           <>
             <InputLabel>Sub Cause</InputLabel>
-            <Select label='subCause' name='sub_cause_id' onChange={handleSubCauseChange} defaultValue="">
+            <Select label='subCause' name='sub_cause_id' onChange={handleInputChange} defaultValue="">
               {subCauses.map((sub) =>
                 <MenuItem value={sub} key={sub.id}>{sub.title}</MenuItem>
               )}
             </Select>
           </>
         }
-        <div className='timeframe'>
+        <InputLabel>Timeframe</InputLabel>
+        <TextField 
+          sx={{width: '20%'}} 
+          size='small' 
+          type='text'
+          name='timeframe'
+          onChange={handleInputChange}
+        />
+        <InputLabel>Amount</InputLabel>
+        <TextField
+          sx={{width: '20%'}} 
+          size='small' 
+          type='text'
+          name='amount'
+          onChange={handleInputChange}
+        />
+        <br/>
+        <Button 
+          variant='contained'
+          color='primary' 
+          className='saveBet'
+          onClick={createNewBet}>Save</Button>
+        {/* <div className='timeframe'>
           <Typography varian='h5'>Timeframe</Typography>
           <InputLabel>Number of:</InputLabel>
           <Select label='timeframe' name='timeframe' defaultValue=''>
@@ -80,7 +108,7 @@ const NewBet = () => {
               <MenuItem value={dmy} key={dmy}>{dmy}</MenuItem>
             )}
           </Select>
-        </div>
+        </div> */}
       </div>
     </div>
   )
