@@ -8,8 +8,11 @@ import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { Input, Menu } from '@mui/material';
 axios.defaults.withCredentials = true;
 const API_URL = AuthServices.getBaseUrl();
+const numbersArray = Array.from(Array(100).keys());
+const dayMonthYear = ['Days', 'Months', 'Years']
 
 const NewBet = () => {
   const initialFormState = {
@@ -32,25 +35,23 @@ const NewBet = () => {
     });
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleMainCauseChange = (event) => {
     const {name, value} = event.target;
     setNewBet({...newBet, [name]: value.id});
     setSubCauses(value.subs);
   }
 
-  // const getSubCauses = () => {
-  //   let causeId = newBet.main_cause_id;
-  //   let mainCause = currentCauses.find(cause => cause.id === causeId);
-  //   debugger
-  //   console.log(mainCause)
-  // }
+  const handleSubCauseChange = (event) => {
+    const {name, value} = event.target;
+    setNewBet({...newBet, [name]: value.id})
+  }
 
   return(
     <div>
       <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
         <InputLabel>Main Cause</InputLabel>
-        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} defaultValue="">
+        <Select label='mainCause' name='main_cause_id' onChange={handleMainCauseChange} defaultValue="">
           {currentCauses.map((cause) => 
             <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
@@ -58,13 +59,28 @@ const NewBet = () => {
         {newBet.main_cause_id != null && 
           <>
             <InputLabel>Sub Cause</InputLabel>
-            <Select label='subCause' name='sub_cause_id' defaultValue="">
+            <Select label='subCause' name='sub_cause_id' onChange={handleSubCauseChange} defaultValue="">
               {subCauses.map((sub) =>
                 <MenuItem value={sub} key={sub.id}>{sub.title}</MenuItem>
               )}
             </Select>
           </>
         }
+        <div className='timeframe'>
+          <Typography varian='h5'>Timeframe</Typography>
+          <InputLabel>Number of:</InputLabel>
+          <Select label='timeframe' name='timeframe' defaultValue=''>
+            {numbersArray.map((num) =>
+              <MenuItem value={num} key={num}>{num}</MenuItem>
+            )}
+          </Select>
+          <InputLabel>Days/Months/Years</InputLabel>
+          <Select label='timeframe' name='timeframe' defaultValue=''>
+            {dayMonthYear.map((dmy) =>
+              <MenuItem value={dmy} key={dmy}>{dmy}</MenuItem>
+            )}
+          </Select>
+        </div>
       </div>
     </div>
   )
