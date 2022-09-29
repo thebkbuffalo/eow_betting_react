@@ -48,7 +48,11 @@ const NewBet = () => {
 
   const createNewBet = () => {
     axios.post(API_URL+'bets', newBet).then(resp=>{
-      console.log(resp);
+      if(resp.data.status === 'created'){
+        window.location = '/dashboard';
+      }else{
+        alert('something went wrong');
+      }
     });
   }
 
@@ -57,7 +61,7 @@ const NewBet = () => {
       <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
         <InputLabel>Main Cause</InputLabel>
-        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} defaultValue="">
+        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} sx={{width: '20%'}} defaultValue="">
           {currentCauses.map((cause) => 
             <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
@@ -65,7 +69,7 @@ const NewBet = () => {
         {newBet.main_cause_id != null && 
           <>
             <InputLabel>Sub Cause</InputLabel>
-            <Select label='subCause' name='sub_cause_id' onChange={handleInputChange} defaultValue="">
+            <Select label='subCause' name='sub_cause_id' onChange={handleInputChange} sx={{width: '20%'}} defaultValue="">
               {subCauses.map((sub) =>
                 <MenuItem value={sub} key={sub.id}>{sub.title}</MenuItem>
               )}
@@ -75,7 +79,7 @@ const NewBet = () => {
         <InputLabel>Timeframe</InputLabel>
         <TextField 
           sx={{width: '20%'}} 
-          size='small' 
+          size='medium' 
           type='text'
           name='timeframe'
           onChange={handleInputChange}
@@ -83,7 +87,7 @@ const NewBet = () => {
         <InputLabel>Amount</InputLabel>
         <TextField
           sx={{width: '20%'}} 
-          size='small' 
+          size='medium' 
           type='text'
           name='amount'
           onChange={handleInputChange}
