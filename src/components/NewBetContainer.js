@@ -11,7 +11,9 @@ import Select from '@mui/material/Select';
 import { Input, Menu } from '@mui/material';
 axios.defaults.withCredentials = true;
 const API_URL = AuthServices.getBaseUrl();
-const numbersArray = Array.from(Array(100).keys());
+const numbersArrayYears = Array.from(Array(100).keys());
+const numbersArrayMonths = Array.from(Array(12).keys())
+
 // const dayMonthYear = ['Days', 'Months', 'Years']
 
 const NewBet = () => {
@@ -48,6 +50,7 @@ const NewBet = () => {
   }
 
   const createNewBet = () => {
+    debugger
     axios.post(API_URL+'bets', newBet).then(resp=>{
       if(resp.data.status === 'created'){
         window.location = '/dashboard';
@@ -79,14 +82,14 @@ const NewBet = () => {
         }
         <InputLabel>Timeframe</InputLabel>
         <div className='timeframe_sect'>
-          <TextField select label='Years' name='timeframeYears' sx={{width: '10%'}}>
-          {numbersArray.map((num) =>
-              <MenuItem value={num} key={num}>{num} years</MenuItem>
+          <TextField select label='Years' name='timeframeYears' sx={{width: '10%'}} onChange={handleInputChange}>
+          {numbersArrayYears.map((num) =>
+              <MenuItem value={num} key={num}>{num} {num === 1 ? 'year' : 'years'}</MenuItem>
             )}
           </TextField>
-          <TextField select label='Months' name='timeframeMonths' sx={{width: '10%', margin: '0 0 0 5px'}}>
-          {numbersArray.map((num) =>
-              <MenuItem value={num} key={num}>{num} months</MenuItem>
+          <TextField select label='Months' name='timeframeMonths' sx={{width: '10%', margin: '0 0 0 5px'}} onChange={handleInputChange}>
+          {numbersArrayMonths.map((num) =>
+              <MenuItem value={num} key={num}>{num} {num === 1 ? 'month' : 'months'}</MenuItem>
             )}
           </TextField>
         </div>

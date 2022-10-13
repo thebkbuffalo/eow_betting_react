@@ -28,8 +28,8 @@ const Home = () => {
         <ListItem>Bet made by {bet.user_name}</ListItem>
         <ListItem>{bet.main_cause}</ListItem>
         <ListItem>{bet.sub_cause}</ListItem>
+        <ListItem>{bet.timeframe_years} years {bet.timeframe_months} months</ListItem>
         <ListItem>${bet.amount}</ListItem>
-        <ListItem>{bet.timeframe}</ListItem>
       </List>
     </Card>
   );
