@@ -32,16 +32,16 @@ const Dashboard = () => {
   }
 
   const displayBets = betsList.map((bet) =>
-  <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
-    <List>
-      <ListItem>Bet made by {bet.user_name}</ListItem>
-      <ListItem>{bet.main_cause}</ListItem>
-      <ListItem>{bet.sub_cause}</ListItem>
-      <ListItem>${bet.amount}</ListItem>
-      <ListItem>{bet.timeframe}</ListItem>
-    </List>
-  </Card>
-);
+    <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
+      <List>
+        <ListItem>Bet made by {bet.user_name}</ListItem>
+        <ListItem>{bet.main_cause}</ListItem>
+        <ListItem>{bet.sub_cause}</ListItem>
+        <ListItem>${bet.amount}</ListItem>
+        <ListItem>{bet.timeframe}</ListItem>
+      </List>
+    </Card>
+  );
 
   return(
     <div>

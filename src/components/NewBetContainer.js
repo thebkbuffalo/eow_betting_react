@@ -11,7 +11,7 @@ import Select from '@mui/material/Select';
 import { Input, Menu } from '@mui/material';
 axios.defaults.withCredentials = true;
 const API_URL = AuthServices.getBaseUrl();
-// const numbersArray = Array.from(Array(100).keys());
+const numbersArray = Array.from(Array(100).keys());
 // const dayMonthYear = ['Days', 'Months', 'Years']
 
 const NewBet = () => {
@@ -19,7 +19,8 @@ const NewBet = () => {
     user_id: null,
     main_cause_id: null,
     sub_cause_id: null,
-    timeframe: '',
+    timeframeYears: null,
+    timeframeMonths: null,
     amount: null
   }
   const user = AuthServices.getCurrentUser();
@@ -77,13 +78,25 @@ const NewBet = () => {
           </>
         }
         <InputLabel>Timeframe</InputLabel>
-        <TextField 
+        <div className='timeframe_sect'>
+          <TextField select label='Years' name='timeframeYears' sx={{width: '10%'}}>
+          {numbersArray.map((num) =>
+              <MenuItem value={num} key={num}>{num} years</MenuItem>
+            )}
+          </TextField>
+          <TextField select label='Months' name='timeframeMonths' sx={{width: '10%', margin: '0 0 0 5px'}}>
+          {numbersArray.map((num) =>
+              <MenuItem value={num} key={num}>{num} months</MenuItem>
+            )}
+          </TextField>
+        </div>
+        {/* <TextField 
           sx={{width: '20%'}} 
           size='medium' 
           type='text'
           name='timeframe'
           onChange={handleInputChange}
-        />
+        /> */}
         <InputLabel>Amount</InputLabel>
         <TextField
           sx={{width: '20%'}} 
@@ -97,7 +110,8 @@ const NewBet = () => {
           variant='contained'
           color='primary' 
           className='saveBet'
-          onClick={createNewBet}>Save</Button>
+          onClick={createNewBet}>Save
+        </Button>
         {/* <div className='timeframe'>
           <Typography varian='h5'>Timeframe</Typography>
           <InputLabel>Number of:</InputLabel>
