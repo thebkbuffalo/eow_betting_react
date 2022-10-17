@@ -21,8 +21,8 @@ const NewBet = () => {
     user_id: null,
     main_cause_id: null,
     sub_cause_id: null,
-    timeframeYears: null,
-    timeframeMonths: null,
+    timeframe_years: 0,
+    timeframe_months: 0,
     amount: null
   }
   const user = AuthServices.getCurrentUser();
@@ -50,7 +50,6 @@ const NewBet = () => {
   }
 
   const createNewBet = () => {
-    debugger
     axios.post(API_URL+'bets', newBet).then(resp=>{
       if(resp.data.status === 'created'){
         window.location = '/dashboard';
@@ -70,7 +69,7 @@ const NewBet = () => {
             <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
         </Select>
-        {newBet.main_cause_id != null && 
+        {newBet.main_cause_id != null && subCauses.length != 0 &&
           <>
             <InputLabel>Sub Cause</InputLabel>
             <Select label='subCause' name='sub_cause_id' onChange={handleInputChange} sx={{width: '20%'}} defaultValue="">
@@ -82,12 +81,12 @@ const NewBet = () => {
         }
         <InputLabel>Timeframe</InputLabel>
         <div className='timeframe_sect'>
-          <TextField select label='Years' name='timeframeYears' sx={{width: '10%'}} onChange={handleInputChange}>
+          <TextField select label='Years' name='timeframe_years' sx={{width: '10%'}} onChange={handleInputChange}>
           {numbersArrayYears.map((num) =>
               <MenuItem value={num} key={num}>{num} {num === 1 ? 'year' : 'years'}</MenuItem>
             )}
           </TextField>
-          <TextField select label='Months' name='timeframeMonths' sx={{width: '10%', margin: '0 0 0 5px'}} onChange={handleInputChange}>
+          <TextField select label='Months' name='timeframe_months' sx={{width: '10%', margin: '0 0 0 5px'}} onChange={handleInputChange}>
           {numbersArrayMonths.map((num) =>
               <MenuItem value={num} key={num}>{num} {num === 1 ? 'month' : 'months'}</MenuItem>
             )}
