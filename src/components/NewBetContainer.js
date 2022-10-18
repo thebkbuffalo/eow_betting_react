@@ -15,7 +15,7 @@ const API_URL = AuthServices.getBaseUrl();
 const numbersArrayYears = Array.from(Array(100).keys());
 const numbersArrayMonths = Array.from(Array(12).keys());
 
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -27,11 +27,8 @@ const style = {
   boxShadow: 24
 };
 
-
-// const dayMonthYear = ['Days', 'Months', 'Years']
-
 const NewBet = () => {
-  const initialFormState = {
+  const initialNewBetFormState = {
     user_id: null,
     main_cause_id: null,
     sub_cause_id: null,
@@ -39,10 +36,21 @@ const NewBet = () => {
     timeframe_months: 0,
     amount: null
   }
+  const initialMainCauseFormState = {
+    title: '',
+    description: ''
+  }
+  const intitialSubCauseFormState = {
+    title: '',
+    description: ''
+  }
+
   const user = AuthServices.getCurrentUser();
   const [currentCauses, setCurrentCauses] = useState([]);
   const [subCauses, setSubCauses] = useState([]);
-  const [newBet, setNewBet] = useState(initialFormState);
+  const [newBet, setNewBet] = useState(initialNewBetFormState);
+  const [newMainCause, setNewMainCause] = useState(initialMainCauseFormState);
+  const [newSubCause, setNewSubCause] = useState(intitialSubCauseFormState);
   const [selectedCauseName, setSelectedCauseName] = useState('');
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -56,9 +64,9 @@ const NewBet = () => {
     });
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleNewBetInputChange = (event) => {
     const {name, value} = event.target;
-    setNewBet({...newBet, [name]: value})
+    setNewBet({...newBet, [name]: value});
     if(name === 'main_cause_id' || name === 'sub_cause_id'){
       setNewBet({...newBet, [name]: value.id});
       if(name === 'main_cause_id'){
@@ -66,6 +74,16 @@ const NewBet = () => {
         setSelectedCauseName(value.title);
       }
     }
+  }
+
+  const handleNewMainCauseChange = (event) => {
+    const {name, value} = event.target;
+    setNewMainCause({...newMainCause, [name]: value});
+  }
+
+  const handleNewSubCauseChange = (event) => {
+    const {name, value} = event.target;
+    setNewSubCause({...newSubCause, [name]: value});
   }
 
   const createNewBet = () => {
@@ -78,12 +96,20 @@ const NewBet = () => {
     });
   }
 
+  const isMainCauseSelected = () => {
+    if(selectedCauseName === ''){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   return(
     <div>
       <Typography variant='h4'>Make a New Bet!</Typography>
       <div className='newBet'>
         <InputLabel>Main Cause</InputLabel>
-        <Select label='mainCause' name='main_cause_id' onChange={handleInputChange} sx={{width: '20%'}} defaultValue="">
+        <Select label='mainCause' name='main_cause_id' onChange={handleNewBetInputChange} sx={{width: '20%'}} defaultValue="">
           {currentCauses.map((cause) => 
             <MenuItem value={cause} key={cause.id}>{cause.title}</MenuItem>
           )}
@@ -91,7 +117,7 @@ const NewBet = () => {
         {newBet.main_cause_id != null && subCauses.length != 0 &&
           <>
             <InputLabel>Sub Cause</InputLabel>
-            <Select label='subCause' name='sub_cause_id' onChange={handleInputChange} sx={{width: '20%'}} defaultValue="">
+            <Select label='subCause' name='sub_cause_id' onChange={handleNewBetInputChange} sx={{width: '20%'}} defaultValue="">
               {subCauses.map((sub) =>
                 <MenuItem value={sub} key={sub.id}>{sub.title}</MenuItem>
               )}
@@ -100,31 +126,24 @@ const NewBet = () => {
         }
         <InputLabel>Timeframe</InputLabel>
         <div className='timeframe_sect'>
-          <TextField select label='Years' name='timeframe_years' sx={{width: '10%'}} onChange={handleInputChange}>
+          <TextField select label='Years' name='timeframe_years' sx={{width: '10%'}} onChange={handleNewBetInputChange}>
           {numbersArrayYears.map((num) =>
               <MenuItem value={num} key={num}>{num} {num === 1 ? 'year' : 'years'}</MenuItem>
             )}
           </TextField>
-          <TextField select label='Months' name='timeframe_months' sx={{width: '10%', margin: '0 0 0 5px'}} onChange={handleInputChange}>
+          <TextField select label='Months' name='timeframe_months' sx={{width: '10%', margin: '0 0 0 5px'}} onChange={handleNewBetInputChange}>
           {numbersArrayMonths.map((num) =>
               <MenuItem value={num} key={num}>{num} {num === 1 ? 'month' : 'months'}</MenuItem>
             )}
           </TextField>
         </div>
-        {/* <TextField 
-          sx={{width: '20%'}} 
-          size='medium' 
-          type='text'
-          name='timeframe'
-          onChange={handleInputChange}
-        /> */}
         <InputLabel>Amount</InputLabel>
         <TextField
           sx={{width: '20%'}} 
           size='medium' 
           type='text'
           name='amount'
-          onChange={handleInputChange}
+          onChange={handleNewBetInputChange}
         />
         <br/>
         <Button 
@@ -151,8 +170,52 @@ const NewBet = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography variant='h3'>Add some new shit {newBet.main_cause_id}</Typography>
+        <Box sx={modalStyle}>
+          {isMainCauseSelected() ? (
+            <div className='newCauseAndSubcause'>
+              <Typography variant='h4'>New Main Cause (necessary)</Typography>
+              <InputLabel>Title</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='title'
+                onChange={handleNewMainCauseChange}
+              />
+              <InputLabel>Description</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='description'
+                onChange={handleNewMainCauseChange}
+              />
+              <Typography variant='h4'>Sub Cause (not necessary but recommended)</Typography>
+              <InputLabel>Title</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='title'
+                onChange={handleNewSubCauseChange}
+              />
+              <InputLabel>Description</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='description'
+                onChange={handleNewSubCauseChange}
+              /><br/>
+              <Button variant='contained' color='primary' sx={{margin: '10px 0 0 0'}}>Save</Button>
+            </div>
+          ) : (
+            <div className='newSubCause'>
+              <Typography variant='h5'>Add a new subcause to {selectedCauseName}</Typography>
+
+            </div>
+          )
+        }
         </Box>
       </Modal>
     </div>

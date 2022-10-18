@@ -39,7 +39,7 @@ const Home = () => {
       <div id='home-container'>
         <div className='heading'>
           <Typography variant='h2'>Welcome to the End of the World!!!</Typography>
-          <Typography variant='h5'>(Or atleast the fake betting for it)</Typography>
+          <Typography variant='h4'>Most Recent Bets</Typography>
         </div>
         <div id='recent-bets'>
           <Grid container direction='row'>
