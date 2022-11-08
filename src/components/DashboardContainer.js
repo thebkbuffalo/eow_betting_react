@@ -34,11 +34,15 @@ const Dashboard = () => {
   const displayBets = betsList.map((bet) =>
     <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
       <List>
-        <ListItem>Bet made by {bet.user_name}</ListItem>
+        <ListItem><span className='cardTitle'>Bet made by {bet.user_name}</span></ListItem>
         <ListItem>{bet.main_cause}</ListItem>
+        {/* <ListItem><span className='counts_line'>main cause count: {bet.main_cause_usage_count}</span></ListItem> */}
         <ListItem>{bet.sub_cause}</ListItem>
+        {/* <ListItem><span className='counts_line'>sub cause count: {bet.sub_cause_usage_count}</span></ListItem> */}
         <ListItem>${bet.amount}</ListItem>
         <ListItem>{bet.timeframe}</ListItem>
+        <ListItem>Occuring in:</ListItem>
+        <ListItem>{bet.timeframe_years} years and {bet.timeframe_months} months</ListItem>
       </List>
     </Card>
   );

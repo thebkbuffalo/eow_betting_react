@@ -63,11 +63,11 @@ function NavBar(){
   if(!loggedIn){
     if(!onLoginPage){
       return(
-        <AppBar component='nav' sx={{display: 'inline-block'}}><a href='/login'>Login</a></AppBar>
+        <AppBar component='nav' sx={{display: 'inline-block'}}><Typography variant='h5'><a href='/login'>Login</a></Typography></AppBar>
       )
     }else{
       return(
-        <AppBar component='nav' sx={{display: 'inline-block'}}><a href='/'>Home</a></AppBar>
+        <AppBar component='nav' sx={{display: 'inline-block'}}><Typography variant='h5'><a href='/'>Home</a></Typography></AppBar>
       )
     }
   }else{

@@ -212,7 +212,23 @@ const NewBet = () => {
           ) : (
             <div className='newSubCause'>
               <Typography variant='h5'>Add a new subcause to {selectedCauseName}</Typography>
-
+              <InputLabel>Title</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='title'
+                onChange={handleNewSubCauseChange}
+              />
+              <InputLabel>Description</InputLabel>
+              <TextField
+                sx={{width: '35%'}}
+                size='medium'
+                type='text'
+                name='description'
+                onChange={handleNewSubCauseChange}
+              /><br/>
+              <Button variant='contained' color='primary' sx={{margin: '10px 0 0 0'}}>Save</Button>
             </div>
           )
         }

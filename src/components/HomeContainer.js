@@ -25,11 +25,15 @@ const Home = () => {
   const displayBets = bets.map((bet) =>
     <Card sx={{minWidth: 200, maxWidth: 350}} variant='outlined' className='betCard'>
       <List>
-        <ListItem>Bet made by {bet.user_name}</ListItem>
+        <ListItem><span className='cardTitle'>Bet made by {bet.user_name}</span></ListItem>
         <ListItem>{bet.main_cause}</ListItem>
+        {/* <ListItem><span className='counts_line'>main cause count: {bet.main_cause_usage_count}</span></ListItem> */}
         <ListItem>{bet.sub_cause}</ListItem>
-        <ListItem>{bet.timeframe_years} years {bet.timeframe_months} months</ListItem>
+        {/* <ListItem><span className='counts_line'>sub cause count: {bet.sub_cause_usage_count}</span></ListItem> */}
         <ListItem>${bet.amount}</ListItem>
+        <ListItem>{bet.timeframe}</ListItem>
+        <ListItem>Occuring in:</ListItem>
+        <ListItem>{bet.timeframe_years} years and {bet.timeframe_months} months</ListItem>
       </List>
     </Card>
   );
@@ -39,9 +43,13 @@ const Home = () => {
       <div id='home-container'>
         <div className='heading'>
           <Typography variant='h2'>Welcome to the End of the World!!!</Typography>
-          <Typography variant='h4'>Most Recent Bets</Typography>
+        </div>
+        <div className='betsInfoBreakdown'>
+          <Typography variant='h4'>Bets Breakdown</Typography>
+          
         </div>
         <div id='recent-bets'>
+          <Typography variant='h4'>Most Recent Bets</Typography>
           <Grid container direction='row'>
             {displayBets}
           </Grid>
