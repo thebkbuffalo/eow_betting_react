@@ -36,21 +36,20 @@ const NewBet = () => {
     timeframe_months: 0,
     amount: null
   }
-  const initialMainCauseFormState = {
-    title: '',
-    description: ''
+  const initialCauseFormState = {
+    mainCauseId: null,
+    mainCauseTitle: '',
+    mainCauseDescription: '',
+    subCauseTitle: '',
+    subCauseDescription: ''
   }
-  const intitialSubCauseFormState = {
-    title: '',
-    description: ''
-  }
+
 
   const user = AuthServices.getCurrentUser();
   const [currentCauses, setCurrentCauses] = useState([]);
   const [subCauses, setSubCauses] = useState([]);
   const [newBet, setNewBet] = useState(initialNewBetFormState);
-  const [newMainCause, setNewMainCause] = useState(initialMainCauseFormState);
-  const [newSubCause, setNewSubCause] = useState(intitialSubCauseFormState);
+  const [newCause, setNewCause] = useState(initialCauseFormState);
   const [selectedCauseName, setSelectedCauseName] = useState('');
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -72,18 +71,14 @@ const NewBet = () => {
       if(name === 'main_cause_id'){
         setSubCauses(value.subs);
         setSelectedCauseName(value.title);
+        setNewCause({...newCause, ['mainCauseId']: value.id});
       }
     }
   }
 
-  const handleNewMainCauseChange = (event) => {
+  const handleNewCauseChange = (event) => {
     const {name, value} = event.target;
-    setNewMainCause({...newMainCause, [name]: value});
-  }
-
-  const handleNewSubCauseChange = (event) => {
-    const {name, value} = event.target;
-    setNewSubCause({...newSubCause, [name]: value});
+    setNewCause({...newCause, [name]: value});
   }
 
   const createNewBet = () => {
@@ -94,6 +89,13 @@ const NewBet = () => {
         alert('something went wrong');
       }
     });
+  }
+
+  const createNewCause = () => {
+    axios.post(API_URL+'causes', newCause).then(resp=>{
+      console.log(resp);
+      handleClose();
+    })
   }
 
   const isMainCauseSelected = () => {
@@ -179,16 +181,16 @@ const NewBet = () => {
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='title'
-                onChange={handleNewMainCauseChange}
+                name='mainCauseTitle'
+                onChange={handleNewCauseChange}
               />
               <InputLabel>Description</InputLabel>
               <TextField
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='description'
-                onChange={handleNewMainCauseChange}
+                name='mainCauseDescription'
+                onChange={handleNewCauseChange}
               />
               <Typography variant='h4'>Sub Cause (not necessary but recommended)</Typography>
               <InputLabel>Title</InputLabel>
@@ -196,18 +198,17 @@ const NewBet = () => {
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='title'
-                onChange={handleNewSubCauseChange}
+                name='subCauseTitle'
+                onChange={handleNewCauseChange}
               />
               <InputLabel>Description</InputLabel>
               <TextField
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='description'
-                onChange={handleNewSubCauseChange}
+                name='subCauseDescription'
+                onChange={handleNewCauseChange}
               /><br/>
-              <Button variant='contained' color='primary' sx={{margin: '10px 0 0 0'}}>Save</Button>
             </div>
           ) : (
             <div className='newSubCause'>
@@ -217,21 +218,26 @@ const NewBet = () => {
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='title'
-                onChange={handleNewSubCauseChange}
+                name='subCauseTitle'
+                onChange={handleNewCauseChange}
               />
               <InputLabel>Description</InputLabel>
               <TextField
                 sx={{width: '35%'}}
                 size='medium'
                 type='text'
-                name='description'
-                onChange={handleNewSubCauseChange}
+                name='subCauseDescription'
+                onChange={handleNewCauseChange}
               /><br/>
-              <Button variant='contained' color='primary' sx={{margin: '10px 0 0 0'}}>Save</Button>
             </div>
           )
         }
+          <Button 
+          variant='contained' 
+          color='primary' 
+          sx={{margin: '10px 0 0 0'}}
+          onClick={createNewCause}
+          >Save</Button>
         </Box>
       </Modal>
     </div>
