@@ -56,12 +56,16 @@ const NewBet = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
+    getBetsData();
+  }, []);
+
+  const getBetsData = () => {
     setNewBet({...newBet, ['user_id']: user.id});
     axios.get(API_URL+'bets/all_causes_for_dropdown').then(resp=>{
       let causes = resp.data.causes;
       setCurrentCauses(causes);
     });
-  }, []);
+  }
 
   const handleNewBetInputChange = (event) => {
     const {name, value} = event.target;
@@ -95,6 +99,7 @@ const NewBet = () => {
     axios.post(API_URL+'causes', newCause).then(resp=>{
       console.log(resp);
       handleClose();
+      getBetsData();
     })
   }
 
